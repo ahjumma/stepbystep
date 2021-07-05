@@ -2,56 +2,25 @@
 # Licensed under the MIT license
 
 import logging
-from pathlib import Path
 
 import click
-from rst2pyi import __version__
 
-from .core import Converter, setup_logger
+from stepbystep import __version__
+from stepbystep.commands.init import init
 
-log = logging.getLogger(__name__)
+logger = logging.getLogger(__name__)
 
 
-@click.command(help="convert reStructuredText annotations to python type stubs")
+@click.group(
+    help="A cli tool for creating/managing systematic routines to guide humans step-by-step"
+)
 @click.help_option("--help", "-h")
-@click.version_option(__version__, "--version", "-V", prog_name="rst2pyi")
-@click.option("--debug", "-D", is_flag=True, default=False, help="enable debug logging")
-@click.option(
-    "--validate", "-v", is_flag=True, default=False, help="validate generated stubs"
-)
-@click.argument(
-    "source_dir", type=click.Path(exists=True, file_okay=False, resolve_path=False)
-)
-@click.argument(
-    "dest_dir",
-    type=click.Path(exists=False, file_okay=False, writable=True, resolve_path=False),
-)
-def main(
-    debug: bool = False,
-    validate: bool = False,
-    source_dir: str = ".",
-    dest_dir: str = ".",
-):
-    setup_logger(debug)
-    source = Path(source_dir)
-    dest = Path(dest_dir)
-    stubs = Converter(source, dest).gen_stubs()
+@click.version_option(__version__, "--version", "-V", prog_name="stepbystep")
+def main():
+    pass
 
-    if validate:
-        success = True
-        from typed_ast.ast3 import parse  # pylint: disable=import-outside-toplevel
 
-        for stub in stubs:
-            with open(stub, "r") as f:
-                content = f.read()
-            try:
-                parse(content)
-            except Exception:  # pylint: disable=broad-except
-                success = False
-                log.exception("validation error for %s", stub)
-
-        if not success:
-            raise click.ClickException("stub validation failed")
+main.add_command(init)
 
 
 if __name__ == "__main__":
