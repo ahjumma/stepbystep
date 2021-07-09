@@ -1,0 +1,6 @@
+* A line beginning with a asterisk is a routine. 
+* A multi-line routine is also possible.
+
+Every line until the next asterisk will be included.
+
+Including empty lines allowing users to increase readability of a routine.
