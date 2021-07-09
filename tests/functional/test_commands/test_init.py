@@ -5,7 +5,7 @@ import os
 
 from click.testing import CliRunner
 
-from stepbystep.constants import ROUTINES_DIR_NAME
+from stepbystep.routines.constants import ROUTINES_DIR_NAME
 from stepbystep.commands.init import init
 
 

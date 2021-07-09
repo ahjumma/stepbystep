@@ -10,6 +10,7 @@ A cli tool for creating/managing systematic routines to guide humans step-by-ste
 
 
 # cli commands
+* init
 * add
   * create a new instruction list within cli editor
 * rm, --remove
