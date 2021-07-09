@@ -18,10 +18,8 @@ class Initializer:
     def create_routines_dir(self):
         dest_dir = self._get_dest_dir()
         if dest_dir.exists():
-            click.echo(
-                f"{ROUTINES_DIR_NAME} subdirectory already exists in {self.work_dir} directory"
-            )
-            raise click.Abort()
+            msg = f"{ROUTINES_DIR_NAME} subdirectory already exists in {self.work_dir} directory"
+            raise click.ClickException(msg)
         else:
             os.makedirs(dest_dir)
             click.echo(

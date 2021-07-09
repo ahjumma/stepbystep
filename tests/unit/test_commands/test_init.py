@@ -3,7 +3,7 @@ from tempfile import TemporaryDirectory
 from pathlib import Path
 import os
 
-from click.exceptions import Abort
+from click.exceptions import ClickException
 
 from stepbystep.constants import ROUTINES_DIR_NAME
 from stepbystep.commands.init import Initializer
@@ -31,7 +31,7 @@ class InitializerTest(TestCase):
             os.makedirs(routines_dir)
             self.assertTrue(routines_dir.exists())
 
-            with self.assertRaises(Abort):
+            with self.assertRaises(ClickException):
                 initializer.create_routines_dir()
 
             self.assertTrue(routines_dir.exists())
