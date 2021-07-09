@@ -1,4 +1,5 @@
 import logging
+import os
 from pathlib import Path
 
 import click
@@ -15,9 +16,20 @@ class Initializer:
         self.work_dir = work_dir
 
     def create_routines_dir(self):
-        dest_dir = self.work_dir / ROUTINES_DIR_NAME
+        dest_dir = self._get_dest_dir()
         if dest_dir.exists():
-            pass
+            click.echo(
+                f"{ROUTINES_DIR_NAME} subdirectory already exists in {self.work_dir} directory"
+            )
+            raise click.Abort()
+        else:
+            os.makedirs(dest_dir)
+            click.echo(
+                f"Initialized {ROUTINES_DIR_NAME} subdirectory in {self.work_dir} directory"
+            )
+
+    def _get_dest_dir(self):
+        return self.work_dir / ROUTINES_DIR_NAME
 
 
 @click.command(
@@ -30,5 +42,5 @@ class Initializer:
     type=click.Path(exists=True, file_okay=False, dir_okay=True, resolve_path=False),
 )
 def init(work_dir):
-    initializer = Initializer(work_dir=work_dir)
+    initializer = Initializer(work_dir=Path(work_dir))
     initializer.create_routines_dir()

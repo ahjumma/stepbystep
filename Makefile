@@ -7,9 +7,8 @@ format:
 	python -m isort --profile black stepbystep
 	python -m black stepbystep
 
-test:
-	python -m coverage run -m stepbystep
-	python -m coverage report
+test: lint
+	python -m pytest --cov=stepbystep --cov-fail-under=58
 	python -m mypy stepbystep/*.py
 
 setup:
