@@ -10,12 +10,14 @@ A cli tool for creating/managing systematic routines to guide humans step-by-ste
 
 
 # cli commands
-* init
-* add
+* init, --init
+* add, --add
   * create a new instruction list within cli editor
+* edit, --edit
 * rm, --remove
 * ls, --list
 * run <target>
+* cat <target>
 * search <target>
 * rename <target>
 
