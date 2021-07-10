@@ -2,8 +2,8 @@ import os
 
 from click.testing import CliRunner
 
-from stepbystep.routines.constants import ROUTINES_DIR_NAME
 from stepbystep.commands.init import init
+from stepbystep.routines.constants import ROUTINES_DIR_NAME
 from tests.helpers import TempDirTest
 
 

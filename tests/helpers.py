@@ -1,6 +1,6 @@
-from unittest import TestCase
-from tempfile import TemporaryDirectory
 from pathlib import Path
+from tempfile import TemporaryDirectory
+from unittest import TestCase
 
 
 class TempDirTest(TestCase):

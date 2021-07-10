@@ -23,6 +23,12 @@ class Creator(ICreator):
         self._assert_routines_dir_initialized()
         self._assert_routine_not_exists(routine_name)
 
+        created = self._create_routine(routine_name)
+        if not created:
+            click.echo("Canceled creating a routine.")
+        else:
+            click.echo(f"Created a new routine named {routine_name}")
+
     def _assert_routines_dir_initialized(self) -> None:
         routines_dir = self.dir_manager.get_path()
         if not routines_dir.exists():
@@ -40,13 +46,18 @@ class Creator(ICreator):
         routine_path = routines_dir / routine_name
         return routine_path
 
-    def _create_routine(self, routine_name: str) -> None:
+    def _create_routine(self, routine_name: str) -> bool:
         routine_path = self._build_routine_path(routine_name)
         initial_data = self._load_initial_data()
         edited_data = click.edit(initial_data)
+        if edited_data is None:
+            return False
+
         with open(routine_path, "w") as f:
             f.write(edited_data)
+        return True
 
-    def _load_initial_data(self) -> str:
+    @staticmethod
+    def _load_initial_data() -> str:
         with open(INITIAL_TEMPLATE_PATH, "r") as f:
             return f.read()

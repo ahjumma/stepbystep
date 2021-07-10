@@ -1,6 +1,16 @@
-* A line beginning with a asterisk is a routine. 
-* A multi-line routine is also possible.
+################################################################################
+# HOW TO CREATE A ROUTINE:
+# - A line beginning with a hash(#) gets commented out.
+#   ex) "# This is a comment."
+# - A line beginning with an asterisk(*) is a routine.
+#   ex) "* This is a routine."
+# - A multi-line routine is supported.
+#   ex) "* This is a multi-line routine.
+#
+#        Every line until the next asterisk will be included
+#
+#        Including empty lines allowing users to increase readability
+#        of a routine."
+################################################################################
 
-Every line until the next asterisk will be included.
-
-Including empty lines allowing users to increase readability of a routine.
+* You can start editing this line to add your routines
