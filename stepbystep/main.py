@@ -6,6 +6,7 @@ import logging
 import click
 
 from stepbystep import __version__
+from stepbystep.commands.add import add
 from stepbystep.commands.init import init
 
 logger = logging.getLogger(__name__)
@@ -21,6 +22,7 @@ def main():
 
 
 main.add_command(init)
+main.add_command(add)
 
 
 if __name__ == "__main__":

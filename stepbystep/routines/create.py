@@ -4,7 +4,7 @@ from pathlib import Path
 import click
 
 from stepbystep.routines.constants import INITIAL_TEMPLATE_PATH
-from stepbystep.routines.directory import DirManager
+from stepbystep.routines.directory import DirManagerFactory, IDirManager
 
 
 class ICreator(ABC):
@@ -14,9 +14,9 @@ class ICreator(ABC):
 
 
 class Creator(ICreator):
-    dir_manager: DirManager
+    dir_manager: IDirManager
 
-    def __init__(self, dir_manager: DirManager) -> None:
+    def __init__(self, dir_manager: IDirManager) -> None:
         self.dir_manager = dir_manager
 
     def create(self, routine_name: str) -> None:
@@ -61,3 +61,11 @@ class Creator(ICreator):
     def _load_initial_data() -> str:
         with open(INITIAL_TEMPLATE_PATH, "r") as f:
             return f.read()
+
+
+class CreatorFactory:
+    @classmethod
+    def get_creator(cls, work_dir: Path) -> ICreator:
+        dir_manager = DirManagerFactory.get_dir_manager(work_dir)
+        creator = Creator(dir_manager=dir_manager)
+        return creator
