@@ -1,12 +1,10 @@
 from pathlib import Path
-from typing import Optional
 from unittest.mock import Mock, patch
 
 import click
 
-# from stepbystep.routines.directory import DirManager
 from stepbystep.routines.create import Creator
-from tests.helpers import TempDirTest
+from tests.helpers import TempDirTest, generate_mock_edit
 
 
 class CreatorTest(TempDirTest):
@@ -72,10 +70,9 @@ class CreatorTest(TempDirTest):
         dir_manager.get_path.return_value = self.work_dir
         creator = Creator(dir_manager=dir_manager)
 
-        def mock_edit(*args, **kwargs) -> Optional[str]:
-            return "hello"
-
         routine_name = "how to brush your teeth"
+        user_input = "hello"
+        mock_edit = generate_mock_edit(user_input)
         with patch("click.edit", mock_edit):
             created = creator._create_routine(routine_name)
 
@@ -88,10 +85,9 @@ class CreatorTest(TempDirTest):
         dir_manager.get_path.return_value = self.work_dir
         creator = Creator(dir_manager=dir_manager)
 
-        def mock_edit(*args, **kwargs) -> Optional[str]:
-            return None
-
         routine_name = "how to brush your teeth"
+        user_input = None
+        mock_edit = generate_mock_edit(user_input)
         with patch("click.edit", mock_edit):
             created = creator._create_routine(routine_name)
 
@@ -104,11 +100,10 @@ class CreatorTest(TempDirTest):
         dir_manager.get_path.return_value = self.work_dir
         creator = Creator(dir_manager=dir_manager)
 
-        def mock_edit(*args, **kwargs) -> Optional[str]:
-            return "hello"
-
         routine_name = "how to brush your teeth"
-        with patch("click.edit", mock_edit):
+        expected_msg = "hello"
+        user_input = generate_mock_edit(expected_msg)
+        with patch("click.edit", user_input):
             creator.create(routine_name)
 
         routine_path = creator._build_routine_path(routine_name)
@@ -119,11 +114,10 @@ class CreatorTest(TempDirTest):
         dir_manager.get_path.return_value = self.work_dir
         creator = Creator(dir_manager=dir_manager)
 
-        def mock_edit(*args, **kwargs) -> Optional[str]:
-            return None
-
         routine_name = "how to brush your teeth"
-        with patch("click.edit", mock_edit):
+        expected_msg = None
+        user_input = generate_mock_edit(expected_msg)
+        with patch("click.edit", user_input):
             creator.create(routine_name)
 
         routine_path = creator._build_routine_path(routine_name)

@@ -38,7 +38,7 @@ class Creator(ICreator):
     def _assert_routine_not_exists(self, routine_name: str) -> None:
         routine_path = self._build_routine_path(routine_name)
         if routine_path.exists():
-            msg = "Routines directory has not been initialized yet"
+            msg = "A routine with the same name exists already"
             raise click.ClickException(msg)
 
     def _build_routine_path(self, routine_name: str) -> Path:
