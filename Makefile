@@ -8,7 +8,7 @@ format:
 	python -m black stepbystep tests
 
 test: lint
-	EDITOR=vim python -m pytest --cov=stepbystep --cov-fail-under=58
+	EDITOR=vim python -m pytest --cov=stepbystep --cov-fail-under=90
 	python -m mypy -p stepbystep
 	python -m mypy -p tests
 
